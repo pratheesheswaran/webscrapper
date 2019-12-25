@@ -8,7 +8,8 @@ class App extends Component {
     scrapData: null,
     loading: false,
     showDownloadBtn: false,
-    isError: false
+    isError: false,
+    test: false
   }
 
   handleClick = (e) => {
