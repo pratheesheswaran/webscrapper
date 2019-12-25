@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
+import FileSaver from 'file-saver';
 
 class App extends Component {
   state = {
@@ -12,7 +13,7 @@ class App extends Component {
   }
 
   handleClick = (e) => {
-    this.setState({loading:true})
+    this.setState({ loading: true })
     e.preventDefault();
     let scrapData = '';
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
@@ -25,27 +26,29 @@ class App extends Component {
           return;
         }
         scrapData = response.data;
-        this.setState({ scrapData , loading: false, showDownloadBtn:true});
+        this.setState({ scrapData, loading: false, showDownloadBtn: true });
         console.log('scrapData', scrapData)
-      }).catch((err)=>{
-console.log('error')
-this.setState({isError:true})
+      }).catch((err) => {
+        console.log('error')
+        this.setState({ isError: true })
       })
   }
 
   handleChange = (e) => {
     e.preventDefault()
-    this.setState({ [e.target.id]: e.target.value, showDownloadBtn:false, isError:false })
+    this.setState({ [e.target.id]: e.target.value, showDownloadBtn: false, isError: false })
   }
-
+  downloadFile = () => {
+    window.download(this.state.scrapData, "webpage.html", "text/plain");
+  }
   render() {
     return (
       <div className="App">
-        {this.state.loading ? 'loading': 'not loading'}
+        {this.state.loading ? 'loading' : 'not loading'}
         <form onSubmit={this.handleClick}>
           <input type="text" onChange={this.handleChange} id="url"></input>
-          {this.state.showDownloadBtn ?  <button >download</button> :  <button >get web page</button>}
-          {this.state.isError ? 'error in url': ''}
+          {this.state.showDownloadBtn ? <button onClick={this.downloadFile}>download</button> : <button >get web page</button>}
+          {this.state.isError ? 'error in url' : ''}
         </form>
       </div>
     )
