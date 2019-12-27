@@ -20,7 +20,9 @@
   width: 150px;
 }
 
-
+#errorMsg{
+  display: inline-block;
+}
 @media (max-width: 575.98px) { 
   .formblock {
 width: 65%;

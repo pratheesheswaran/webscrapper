@@ -83,7 +83,7 @@ class App extends Component {
             {this.state.showDownloadBtn ? <button className="btn btn-dark" onClick={this.downloadFile}>download</button> : <button className="btn btn-dark">scrap</button>}
 
           </form>
-          {this.state.errorMsg}
+          <div id="errorMsg">{this.state.errorMsg}</div>
         </div>
      
       </div>
