@@ -13,10 +13,14 @@
 }
 .modes {
  text-align: right;
+ padding-top:5px;
 }
 .btn {
   margin-left: 5px;
+  width: 150px;
 }
+
+
 @media (max-width: 575.98px) { 
   .formblock {
 width: 65%;
