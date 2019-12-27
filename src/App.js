@@ -67,9 +67,13 @@ class App extends Component {
     })
   }
   initDarkMode=()=>{
-    document.body.style.backgroundColor = "black";
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      // dark mode
+      document.body.style.backgroundColor = "black";
     document.body.style.color = "white";
     this.setState({darkMode:true})
+  }
+    
   }
   render() {
     return (
