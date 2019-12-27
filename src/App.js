@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
-import FileSaver from 'file-saver';
 
 class App extends Component {
   state = {
@@ -9,7 +8,8 @@ class App extends Component {
     scrapData: null,
     loading: false,
     showDownloadBtn: false,
-    isError: false
+    isError: false,
+    darkMode: false
   }
 
   handleClick = (e) => {
@@ -30,7 +30,7 @@ class App extends Component {
         console.log('scrapData', scrapData)
       }).catch((err) => {
         console.log('error')
-        this.setState({ isError: true })
+        this.setState({ isError: true, loading: false })
       })
   }
 
@@ -41,15 +41,36 @@ class App extends Component {
   downloadFile = () => {
     window.download(this.state.scrapData, "webpage.html", "text/plain");
   }
+  resetErrorMsg = () => {
+    this.setState({ isError: false })
+  }
+  darkmode = () => {
+    this.setState({ darkMode: !this.state.darkMode }, () => {
+      if (this.state.darkMode) {
+        document.body.style.backgroundColor = "black";
+        document.body.style.color = "white";
+        document.body.style.transition = "all 2s";
+      } else {
+        document.body.style.backgroundColor = "white";
+        document.body.style.color = "black";
+        document.body.style.transition = "all 2s";
+      }
+    })
+  }
   render() {
     return (
       <div className="App">
-        {this.state.loading ? 'loading' : 'not loading'}
-        <form onSubmit={this.handleClick}>
-          <input type="text" onChange={this.handleChange} id="url"></input>
-          {this.state.showDownloadBtn ? <button onClick={this.downloadFile}>download</button> : <button >get web page</button>}
+        <div className="modes container" onClick={this.darkmode}>{!this.state.darkMode ? 'dark' : 'light'}</div><br></br>
+        <div className="formblock">
+          {this.state.loading ? 'loading' : 'not loading'}
+          <h1>Web Scrapper</h1>
+          <form onSubmit={this.handleClick} className="form">
+            <input type="text" onFocus={this.resetErrorMsg} className="form-control" onChange={this.handleChange} id="url" aria-describedby="url" placeholder="enter url"></input>
+            {this.state.showDownloadBtn ? <button className="btn btn-dark" onClick={this.downloadFile}>download</button> : <button className="btn btn-dark">scrap</button>}
+
+          </form>
           {this.state.isError ? 'error in url' : ''}
-        </form>
+        </div>
       </div>
     )
   }
