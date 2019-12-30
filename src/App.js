@@ -18,7 +18,7 @@ class App extends Component {
   handleClick = (e) => {
     e.preventDefault();
     if (this.state.url) {
-      this.setState({ loading: true })
+      this.setState({ loading: true, errorMsg:'', isError: false })
       let scrapData = '';
       const proxyurl = "https://cors-anywhere.herokuapp.com/";
       let url = "https://app.zenscrape.com/api/v1/get?url=" + this.state.url + "&render=&premium=&apikey=15a8d570-2735-11ea-bad3-cd0e72860b8f";
@@ -81,7 +81,7 @@ class App extends Component {
         <div className="modes container" onClick={this.darkmode}>{!this.state.darkMode ? 'dark' : 'light'}</div><br></br>
         <div className="formblock">
           <p id="loading">{this.state.loading ? 'loading' : 'not loading'}</p>
-          <h1>Web Scrapper</h1>
+          <h1>Web Scraper</h1>
           <form onSubmit={this.handleClick} className="form">
             <input type="text" onFocus={this.resetErrorMsg} className="form-control" onChange={this.handleChange} id="url" aria-describedby="url" placeholder="enter url"></input>
             {this.state.showDownloadBtn ? <button className="btn btn-dark" onClick={this.downloadFile}>download</button> : <button className="btn btn-dark">scrap</button>}
